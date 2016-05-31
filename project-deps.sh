@@ -1,8 +1,14 @@
-!/bin/bash
-git clone 
-pip install -r pip-requirements.txt
+#!/bin/bash
+
+pip install -r packages/pip-requirements.txt
+
 #django-evolution==0.6.7
-pip install https://github.com/beanbaginc/django-evolution/archive/release-0.6.7.zip
+pip install packages/django-evolution-release-0.6.7.zip
 
 #django-mailer==0.2a1.dev3
-pip install https://launchpad.net/ubuntu/+archive/primary/+files/django-mailer_0.2a1.dev3.orig.tar.gz
+pip install packages/django-mailer_0.2a1.dev3.orig.tar.gz
+
+echo "untar packages/pyexiv2.tar.gz under /opt/clientname/lib/python2.7/site-packages/ directory"
+tar -zxvf packages/pyexiv2.tar.gz /opt/clientname/lib/python2.7/site-packages/
+
+

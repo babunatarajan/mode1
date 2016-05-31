@@ -1,34 +1,14 @@
 #!/bin/bash
 
-echo "This script will generate Gunicorn and WSGI file ..."
-echo -n "Please enter client name :"
+echo "This script will generate Gunicorn and WSGI file"
+
+echo -n "Please enter client name and press [ENTER]: "
 read name
 
-echo -n "Please verify client name... ($name) is that correct Yes/No :" 
-read clientname
-if [ $clientname == "Yes" ]; then
-   echo "Proceeding..."
-else
-   exit
-fi
-
-grep -i "$name" "/etc/init/$name"
-
-if  [ $? == 0 ]; then
-  echo -n "Client already exist... You want to overwrite nginx file Yes/No"
-  read owrite
-  if [ $owrite == "Yes" ]; then
-      conf
-  else
-     exit
-else
-  conf
-  exit 1
-fi
-
-#[Gunicorn file creation]
+#[Gunicorn file creation function]
 conf(){
 echo "Generating gunicorn file..."
+
 printf "
 
 description "Gunicorn application server handling $name.themode.net"
@@ -51,8 +31,7 @@ echo "You can manage Gunicorn service with following commands"
 echo "service gunicorn-$name start/stop/restart" 
 
 printf "
-
-"  
+ 
 import os
 import sys
 
@@ -78,8 +57,36 @@ application = django.core.handlers.wsgi.WSGIHandler()
 " > /opt/$name/E3/wsgi.py
 
 sudo chown -R www-data:www-data /opt/$name/
-
 }
+
+echo -n "Please verify client name ($name)... is that correct [Yes/No]: " 
+read clientname
+
+if [ $clientname == "Yes" ] || [ $clientname == "yes" ]; then
+   if [ ! -d /opt/$name/E3 ]; then
+      echo "Client directory does not exist please run setup.sh first"
+      exit
+   else
+   conf
+   fi
+else
+   exit
+fi
+
+
+if  [ -f /etc/init/gunicorn-$name.conf ]; then
+  echo -n "Client already exist... You want to overwrite nginx file Yes/No"
+  read owrite
+  if [ $owrite == "Yes" ]; then
+      conf
+  else
+     exit
+  fi
+else
+  conf
+  exit 1
+fi
+
 
 
 

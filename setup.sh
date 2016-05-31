@@ -1,8 +1,6 @@
 #!/bin/bash
-SPATH=$(dirname `which $0`)
 
 echo "Welcome !!! Mode 1.0 webserver installation using Nginx, Gunicorn and MySQL"
-
 
 echo -n "Please enter client name and press [ENTER]: "
 read name
@@ -10,7 +8,7 @@ read name
 echo -n "Please verify client name ($name)... is that correct [Yes/No] :" 
 read clientname
 if [ $clientname == "Yes" ] || [ $clientname == "yes" ]; then
-   echo "Proceeding..."
+  echo "..."
 else
    exit
 fi
@@ -31,7 +29,7 @@ pip install packages/django-evolution-release-0.6.7.zip
 pip install packages/django-mailer_0.2a1.dev3.orig.tar.gz
 
 echo "untar packages/pyexiv2.tar.gz under /opt/clientname/lib/python2.7/site-packages/ directory"
-tar -zxvf packages/pyexiv2.tar.gz /opt/clientname/lib/python2.7/site-packages/
+tar -zxvf packages/pyexiv2.tar.gz -C /opt/$name/lib/python2.7/site-packages/
 
 deactivate
 echo "Please run below scripts to complete the installation"

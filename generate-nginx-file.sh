@@ -14,6 +14,22 @@ fi
 echo -n "Please enter client name and press [ENTER]: "
 read name
 
+echo "Please enter additional domain names for this client"
+echo -n "DOMAIN 1: "
+read domain1
+
+echo -n "DOMAIN 2: "
+read domain2
+
+echo -n "DOMAIN 3: "
+read domain3
+
+echo -n "DOMAIN 4: "
+read domain4
+
+echo -n "DOMAIN 5: "
+read domain5
+
 
 #Creating Nginx Conf File
 echo "Generating nginx conf file..."
@@ -23,9 +39,9 @@ conf(){
         error_log /var/log/nginx/$name-error.log;
         access_log /var/log/nginx/$name-access.log;
 
-        server_name  $name.themode.net ;
+        server_name  $name.themode.net $domain1 $domain2 $domain3 $domain4 $domain5;
         ## Only allow these request methods ##
-        if (\$request_method !~ ^(GET|HEAD|POST)/$ ) {
+        if (\$request_method !~ ^(GET|HEAD|POST)\$ ) {
                 return 444;
         }
         ## Do not accept DELETE, SEARCH and other methods ##

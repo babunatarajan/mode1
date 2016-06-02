@@ -40,6 +40,8 @@ echo "MySQL    : mysql-setup.sh"
 
 if  [ -d /opt/$name ]; then
   echo "Client already exist... "
+#Temporarly allowing for old directory
+  isetup
   exit
 else
   isetup

@@ -18,9 +18,16 @@ apt-get update
 apt-get -y install python-virtualenv
 apt-get -y install python-pip
 virtualenv /opt/$name
+
+if [ ! -f /opt/$name/bin/activate ]; then
+  echo "Virtual ENV not installed properly"
+else
+fi
+   
 source /opt/$name/bin/activate
 
-pip install -r packages/pip-requirements.txt
+#pip install -r packages/pip-requirements.txt
+pip install -r requirements.txt
 
 #django-evolution==0.6.7
 pip install packages/django-evolution-release-0.6.7.zip

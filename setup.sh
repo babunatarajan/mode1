@@ -22,6 +22,7 @@ virtualenv /opt/$name
 if [ ! -f /opt/$name/bin/activate ]; then
   echo "Virtual ENV not installed properly"
 else
+  pass
 fi
    
 source /opt/$name/bin/activate

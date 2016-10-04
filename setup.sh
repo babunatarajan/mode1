@@ -10,7 +10,7 @@ read clientname
 if [ $clientname == "Yes" ] || [ $clientname == "yes" ]; then
   echo "..."
 else
-   exit
+   exit 1
 fi
 
 isetup(){
@@ -21,11 +21,9 @@ virtualenv /opt/$name
 
 if [ ! -f /opt/$name/bin/activate ]; then
   echo "Virtual ENV not installed properly"
-  exit
-else
-  pass
+  exit 1
 fi
-   
+
 source /opt/$name/bin/activate
 
 #pip install -r packages/pip-requirements.txt
@@ -50,12 +48,12 @@ echo "Gunicorn : generate-gunicorn-file.sh"
 
 if  [ -d /opt/$name ]; then
   echo "Client already exist... "
-#Temporarly allowing for old directory
-  isetup
-  exit
+#uncomment following if client directory already exist
+#  isetup
+  exit 1
 else
   isetup
-  exit 1
+  exit 0
 fi
 
 

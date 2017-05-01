@@ -48,7 +48,11 @@ read apacheport
 echo "Generating apache conf file..."
 conf(){
 
+rm /etc/apache2/sites-enabled/000-default.conf
+cp apache2-ports.conf /etc/apache2/ports.conf
 cp apache.conf /etc/apache2/sites-available/"$name".conf
+sed -i "s/APACHEPORT/$apacheport/g" /etc/apache2/ports.conf
+
 sed -i "s/CLIENTNAME/$name/g" /etc/apache2/sites-available/"$name".conf
 sed -i "s/APACHEPORT/$apacheport/g" /etc/apache2/sites-available/"$name".conf
 sed -i "s/CLIENT1/$domain1 $domain2 $domain3 $domain3 $domain4 $domain5/g" /etc/apache2/sites-available/"$name".conf

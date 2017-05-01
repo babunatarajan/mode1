@@ -5,7 +5,7 @@ server {
 
         server_name  CLIENTNAME.BRANDNAME CLIENT1 ;
         ## Only allow these request methods ##
-        if (\$request_method !~ ^(GET|HEAD|POST)\$ ) {
+        if ($request_method !~ ^(GET|HEAD|POST)$ ) {
                 return 444;
         }
         ## Do not accept DELETE, SEARCH and other methods ##
@@ -35,9 +35,9 @@ server {
         # actual source files
         location / {
                 root /opt/CLIENTNAME/E3;
-                proxy_set_header    X-Real-IP   \$remote_addr;
-                proxy_set_header    Host        \$http_host;
-                proxy_set_header    X-Forwarded-For \$proxy_add_x_forwarded_for;
+                proxy_set_header    X-Real-IP   $remote_addr;
+                proxy_set_header    Host        $http_host;
+                proxy_set_header    X-Forwarded-For $proxy_add_x_forwarded_for;
         #        proxy_pass          http://unix:/opt/CLIENTNAME/gunicorn/listen.sock;
                 proxy_pass      http://localhost:APACHEPORT;
 

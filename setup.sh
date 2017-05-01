@@ -4,16 +4,17 @@ echo "Welcome !!! Mode 1.0 environment setup"
 
 . os_install.sh
 
-echo -n "Please enter environment name and press [ENTER]: "
-read name
+#echo -n "Please enter environment name and press [ENTER]: "
+#read name
+name=mode1
 
-echo -n "Please verify environment name ($name)... is that correct [Yes/No] :" 
-read name
-if [ $name == "Yes" ] || [ $name == "yes" ]; then
-  echo "..."
-else
-   exit 1
-fi
+#echo -n "Please verify environment name ($name)... is that correct [Yes/No] :" 
+#read name
+#if [ $name == "Yes" ] || [ $name == "yes" ]; then
+#  echo "..."
+#else
+#   exit 1
+#fi
 
 isetup(){
 

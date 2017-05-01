@@ -14,7 +14,12 @@ fi
 echo -n "Please enter client name and press [ENTER]: "
 read name
 
-echo "Please enter additional domain names for this client"
+if [ ! -d /opt/$name/E3 ]; then
+   echo "Project folder not available please do SVN / Git clone and run the setup"
+   exit 1
+fi
+
+echo "Please enter subdomain or additional names for this client"
 echo -n "DOMAIN 1: "
 read domain1
 
@@ -30,59 +35,23 @@ read domain4
 echo -n "DOMAIN 5: "
 read domain5
 
+grep -i "<VirtualHost" /etc/apache2/sites-enabled/"$name".conf
+echo -n "Enter Apache port: "
+read apacheport
 
 #Creating Nginx Conf File
 echo "Generating nginx conf file..."
 conf(){
-   printf "server {
-        listen       80;
-        error_log /var/log/nginx/$name-error.log;
-        access_log /var/log/nginx/$name-access.log;
+cp nginx-conf /etc/nginx/sites-available/$name
+sed -i "s/APACHEPORT/$apacheport/g" /etc/nginx/sites-available/$name
+sed -i "s/CLIENTNAME/$name/g" /etc/nginx/sites-available/$name
+sed -i "s/CLIENT1/$domain1 $domain2 $domain3 $domain4 $domain5/g" /etc/nginx/sites-available/$name 
 
-        server_name  $name.themode.net $domain1 $domain2 $domain3 $domain4 $domain5;
-        ## Only allow these request methods ##
-        if (\$request_method !~ ^(GET|HEAD|POST)\$ ) {
-                return 444;
-        }
-        ## Do not accept DELETE, SEARCH and other methods ##
+echo "Creating soft link for Nginx Conf file $name ..."
+cd /etc/nginx/sites-enabled/ && ln -s ../sites-available/$name .
+cd $OLDPWD
+echo "Successfully Nginx conf file has been generated"
 
-        location /robots.txt{
-                root    /opt/$name/E3/apache;
-                expires 30d;
-        }
-
-        location /favicon.ico  {
-                root    /opt/$name/E3/media/images/master;
-                access_log off;
-                log_not_found off;
-                expires 30d;
-        }
-
-        #serve static files
-        location ~ ^/(images|javascript|js|css|flash|media|static)/  {
-                root    /opt/$name/E3;
-                expires 30d;
-        }
-        # django admin media files
-        location ~ ^/admin_media{
-                root    /opt/$name/E3;
-                expires 30d;
-        }
-        # actual source files
-        location / {
-                root /opt/$name/E3;
-                proxy_set_header    X-Real-IP   \$remote_addr;
-                proxy_set_header    Host        \$http_host;
-                proxy_set_header    X-Forwarded-For \$proxy_add_x_forwarded_for;
-                proxy_pass          http://unix:/opt/$name/gunicorn/listen.sock;
-        }
-}
-" > "/etc/nginx/sites-available/$name"
-
-   echo "Creating soft link for Nginx Conf file $name ..."
-   cd /etc/nginx/sites-enabled/ && ln -s ../sites-available/$name .
-   cd ~
-   echo "Successfully Nginx conf file has been generated"
 }
 
 echo -n "Please verify client name ($name)... is that correct [Yes/No]: " 

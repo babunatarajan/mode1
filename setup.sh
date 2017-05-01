@@ -1,22 +1,22 @@
 #!/bin/bash
 
-echo "Welcome !!! Mode 1.0 webserver installation using Nginx, Gunicorn and MySQL"
+echo "Welcome !!! Mode 1.0 environment setup"
 
-echo -n "Please enter client name and press [ENTER]: "
+. os_install.sh
+
+echo -n "Please enter environment name and press [ENTER]: "
 read name
 
-echo -n "Please verify client name ($name)... is that correct [Yes/No] :" 
-read clientname
-if [ $clientname == "Yes" ] || [ $clientname == "yes" ]; then
+echo -n "Please verify environment name ($name)... is that correct [Yes/No] :" 
+read name
+if [ $name == "Yes" ] || [ $name == "yes" ]; then
   echo "..."
 else
    exit 1
 fi
 
 isetup(){
-apt-get update
-apt-get -y install python-virtualenv
-apt-get -y install python-pip
+
 virtualenv /opt/$name
 
 if [ ! -f /opt/$name/bin/activate ]; then
@@ -26,13 +26,20 @@ fi
 
 source /opt/$name/bin/activate
 
-#pip install -r packages/pip-requirements.txt
+if [[ -z "$VIRTUAL_ENV" ]]; then
+    echo "No VIRTUAL_ENV set"
+else
+    echo "VIRTUAL_ENV is set"
+fi
+
+if [ ! -f requirements.txt ]; then
+  echo "Requirement text is missing"
+  exit 0
+fi
+
 pip install -r requirements.txt
 
-#django-evolution==0.6.7
 pip install packages/django-evolution-release-0.6.7.zip
-
-#django-mailer==0.2a1.dev3
 pip install packages/django-mailer_0.2a1.dev3.orig.tar.gz
 
 echo "untar packages/pyexiv2.tar.gz under /opt/clientname/lib/python2.7/site-packages/ directory"
@@ -44,10 +51,11 @@ echo "Nginx    : generate-nginx-file.sh"
 echo "MySQL    : mysql-setup.sh"
 echo "Code     : cd /opt/$name && svn co http://svn.example.com/"
 echo "Gunicorn : generate-gunicorn-file.sh"
+echo "Apache   : generate-apache-file.sh"
 }
 
 if  [ -d /opt/$name ]; then
-  echo "Client already exist... "
+  echo "Environment already exist... "
 #uncomment following if client directory already exist
 #  isetup
   exit 1

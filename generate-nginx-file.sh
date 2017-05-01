@@ -45,6 +45,10 @@ read apacheport
 #Creating Nginx Conf File
 echo "Generating nginx conf file..."
 conf(){
+cp nginx-default /etc/nginx/sites-available/default
+cp nginx-index.html /usr/share/nginx/html/index.html
+sed -i "s/BRANDNAME/$brandname/g" /usr/share/nginx/html/index.html
+
 cp nginx-conf /etc/nginx/sites-available/$name
 sed -i "s/APACHEPORT/$apacheport/g" /etc/nginx/sites-available/$name
 sed -i "s/CLIENTNAME/$name/g" /etc/nginx/sites-available/$name

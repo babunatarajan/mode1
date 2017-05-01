@@ -3,7 +3,7 @@ server {
         error_log /var/log/nginx/CLIENTNAME-error.log;
         access_log /var/log/nginx/CLIENTNAME-access.log;
 
-        server_name  CLIENTNAME.themode.net CLIENT1 ;
+        server_name  CLIENTNAME.BRANDNAME CLIENT1 ;
         ## Only allow these request methods ##
         if (\$request_method !~ ^(GET|HEAD|POST)\$ ) {
                 return 444;

@@ -35,6 +35,9 @@ read domain4
 echo -n "DOMAIN 5: "
 read domain5
 
+echo -n "Enter brand name: "
+read brandname
+        
 grep -i "<VirtualHost" /etc/apache2/sites-enabled/"$name".conf
 echo -n "Enter Apache port: "
 read apacheport
@@ -46,6 +49,7 @@ cp nginx-conf /etc/nginx/sites-available/$name
 sed -i "s/APACHEPORT/$apacheport/g" /etc/nginx/sites-available/$name
 sed -i "s/CLIENTNAME/$name/g" /etc/nginx/sites-available/$name
 sed -i "s/CLIENT1/$domain1 $domain2 $domain3 $domain4 $domain5/g" /etc/nginx/sites-available/$name 
+sed -i "s/BRANDNAME/$brandname/g" /etc/nginx/sites-available/$name
 
 echo "Creating soft link for Nginx Conf file $name ..."
 cd /etc/nginx/sites-enabled/ && ln -s ../sites-available/$name .

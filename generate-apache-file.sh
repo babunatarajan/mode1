@@ -35,6 +35,9 @@ read domain4
 echo -n "DOMAIN 5: "
 read domain5
 
+echo -n "Enter brand name: "
+read brandname
+
 echo "Following are the Apache ports already being used... Use different port"
 grep -r "<VirtualHost" /etc/apache2/sites-enabled/*
 
@@ -48,11 +51,8 @@ conf(){
 cp apache.conf /etc/apache2/sites-available/"$name".conf
 sed -i "s/CLIENTNAME/$name/g" /etc/apache2/sites-available/"$name".conf
 sed -i "s/APACHEPORT/$apacheport/g" /etc/apache2/sites-available/"$name".conf
-sed -i "s/CLIENT1/$domain1/g" /etc/apache2/sites-available/"$name".conf
-sed -i "s/CLIENT2/$domain2/g" /etc/apache2/sites-available/"$name".conf
-sed -i "s/CLIENT3/$domain3/g" /etc/apache2/sites-available/"$name".conf
-sed -i "s/CLIENT4/$domain4/g" /etc/apache2/sites-available/"$name".conf
-sed -i "s/CLIENT5/$domain5/g" /etc/apache2/sites-available/"$name".conf
+sed -i "s/CLIENT1/$domain1 $domain2 $domain3 $domain3 $domain4 $domain5/g" /etc/apache2/sites-available/"$name".conf
+sed -i "s/BRANDNAME/$brandname/g" /etc/apache2/sites-available/"$name".conf
 
 echo "Enabling Apache conf file $name ..."
 cd /etc/apache2/sites-enabled/ && ln -s ../sites-available/"$name".conf .

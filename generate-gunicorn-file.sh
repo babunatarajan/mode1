@@ -10,7 +10,7 @@ conf(){
 echo "Generating gunicorn file..."
 
 printf "
-description \"Gunicorn application server handling $name.themode.net\"
+description \"Gunicorn application server handling "$name".BRANDNAME\"
 
 start on runlevel [2345]
 stop on runlevel [!2345]

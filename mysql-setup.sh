@@ -20,11 +20,9 @@ read publicpwd
 MYSQL=`which mysql`
  
 Q1="CREATE DATABASE IF NOT EXISTS $name;"
-Q2="CREATE USER $cmsname@localhost identified by '$cmspwd';"
-Q3="CREATE USER $publicname@localhost identified by '$publicpwd';"
-Q4="GRANT ALL ON $name.* TO '$cmsname'@'localhost';"
-Q5="GRANT SELECT ON $name.* TO '$publicname'@'localhost';"
-Q6="FLUSH PRIVILEGES;"
-SQL="${Q1}${Q2}${Q3}${Q4}${Q5}${Q6}"
+Q2="GRANT ALL ON $name.* TO '$cmsname'@'localhost' identified by '$cmspwd';"
+Q3="GRANT SELECT ON $name.* TO '$publicname'@'localhost' identified by '$publicpwd';"
+Q4="FLUSH PRIVILEGES;"
+SQL="${Q1}${Q2}${Q3}${Q4}"
  
 $MYSQL -uroot -p -e "$SQL"

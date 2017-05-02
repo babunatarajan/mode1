@@ -15,8 +15,9 @@ echo -n "Please enter client name and press [ENTER]: "
 read name
 
 if [ ! -d /opt/$name/E3 ]; then
-   echo "Project folder not available please do SVN / Git clone and run the setup"
-   exit 1
+   echo "Project folder not available... creating sample project /opt/$name/E3"
+   mkdir /opt/$name
+   tar zxvf E3.tar.gz -C /opt/$name/
 fi
 
 echo "Please enter subdomain or additional names for this client"

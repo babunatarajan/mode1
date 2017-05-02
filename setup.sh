@@ -48,11 +48,11 @@ tar -zxvf packages/pyexiv2.tar.gz -C /opt/$name/lib/python2.7/site-packages/
 
 deactivate
 echo "Please run below scripts to complete the installation"
+echo "Apache   : generate-apache-file.sh"
 echo "Nginx    : generate-nginx-file.sh"
 echo "MySQL    : mysql-setup.sh"
 echo "Code     : cd /opt/$name && svn co http://svn.example.com/"
-echo "Gunicorn : generate-gunicorn-file.sh"
-echo "Apache   : generate-apache-file.sh"
+#echo "Gunicorn : generate-gunicorn-file.sh"
 }
 
 if  [ -d /opt/$name ]; then

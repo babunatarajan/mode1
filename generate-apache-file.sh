@@ -15,8 +15,9 @@ echo -n "Please enter client name and press [ENTER]: "
 read name
 
 if [ ! -d /opt/$name/E3 ]; then
-   echo "Project folder not available please do SVN / Git clone and run the setup"
-   exit 1
+   echo "Project folder not available... creating sample project /opt/$name/E3"
+   mkdir /opt/$name
+   tar zxvf E3.tar.gz -C /opt/$name/
 fi
 
 echo "Please enter subdomain or additional names for this client"
@@ -67,6 +68,8 @@ echo "Successfully "$name".conf file has been generated"
 echo "Creating WSGI file..."
 cp wsgi.py /opt/$name/E3/
 sed -i "s/CLIENTNAME/$name/g" /opt/$name/E3/wsgi.py  
+
+sudo service apache2 restart
 
 }
 echo -n "Please verify client name ($name)... is that correct [Yes/No]: " 

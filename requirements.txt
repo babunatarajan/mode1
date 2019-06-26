@@ -1,5 +1,5 @@
 setuptools
-Django==1.11.19
+Django
 Markdown==2.6.6
 MySQL-python==1.2.3
 Pillow==3.3.2

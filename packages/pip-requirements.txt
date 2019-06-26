@@ -30,7 +30,7 @@ reportlab==2.5
 requests==2.2.1
 simplejson==2.1.6
 six==1.8.0
-urllib3==1.18
+urllib3
 wsgiref==0.1.2
 xlrd==0.9.4
 

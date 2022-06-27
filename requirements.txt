@@ -26,7 +26,7 @@ pycrypto==2.6.1
 pyserial==2.6
 python-dateutil==2.1
 python-memcached==1.47
-reportlab==2.5
+reportlab==3.5.55
 requests==2.2.1
 simplejson==2.1.6
 six==1.8.0
